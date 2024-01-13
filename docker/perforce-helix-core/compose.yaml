@@ -1,0 +1,16 @@
+services:
+  perforce:
+    build:
+      context: ./perforce-helix-core
+      dockerfile: perforce-helix-core
+    volumes:
+      - ./perforce-helix-core/p4dctl.conf.d:/etc/perforce/p4dctl.conf.d
+      - ./perforce-helix-core/perforce-data:/perforce-data
+      - ./perforce-helix-core/dbs:/dbs
+    environment:
+       - P4PORT=1666
+       - P4ROOT=/perforce-data
+    ports:
+      # If you can't forward 1666 change to <forwarded_port>:1666
+      - 1666:1666
+    restart: unless-stopped
