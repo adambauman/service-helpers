@@ -42,8 +42,7 @@ $as_sudo docker compose -f "${docker_directory}/compose.yaml" run --rm perforce 
 
 echo ""
 echo "Success! When you're ready to start the service:"
-echo "- \"cd ${docker_directory}\""
-echo "sudo docker compose -f $docker_directory}/compose.yaml up -d"
+echo "sudo docker compose -f ${docker_directory}/compose.yaml up -d"
 echo ""
 
 exit
