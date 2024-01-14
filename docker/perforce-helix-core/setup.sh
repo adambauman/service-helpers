@@ -1,7 +1,6 @@
 #!/bin/bash
 
-#docker_directory="/srv/docker"
-docker_directory="/tmp/script_scratch"
+docker_directory="/srv/docker"
 perforce_directory="${docker_directory}/perforce-helix-core"
 
 echo "Preparing ${perforce_directory}..."
