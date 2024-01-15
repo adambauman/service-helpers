@@ -10,8 +10,8 @@ if [ 0 -ne $EUID ]; then
     as_sudo='sudo'
 fi
 
-if [ -d "$perforce_directory" ]; then
-    echo "Error: ${perforce_directory} already exists."
+if [ -d "$docker_directory" ]; then
+    echo "Error: ${docker_directory} already exists, this installation would clobber your docker compose, etc."
     exit
 fi
 
