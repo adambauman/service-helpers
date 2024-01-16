@@ -18,9 +18,9 @@
 
 3. Run `git clone https://github.com/adambauman/service-helpers.git`
 
-4. Run `/service-helpers/docker/install-docker.sh`
+4. Run `./service-helpers/docker/install-docker.sh`
 
-5. Run `/service-helpers/docker/perforce-helix-core/setup.sh`
+5. Run `./service-helpers/docker/perforce-helix-core/setup.sh`
     - During setup you'll be asked to configure p4d. For the most part you can stick with the defaults but these might need to be changed:
         - Server name: "master"
         - Server root: "/perforce-data"
