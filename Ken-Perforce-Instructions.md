@@ -9,13 +9,12 @@
 
 1. Create a bootable USB drive from your ISO then install Ubuntu.
     - Update to the newest installer when prompted.
-    - Keep an eye on how setup partitions disks, sometimes has a habit of leaving a lot of space unoccupied. 
-        Check the "free space" line item, adjust your root partition to use all that tasty space.
+    - You'll need to adjust partitioning to use the full disk, see "Partitioning" for tips.
     - Install OpenSSH server if available.
     - You might see a docker option during install, leave it unchecked.
 
 2. Once installed open a console and run `sudo apt update` then `sudo apt upgrade`.
-    - See "Remote Admin Notes" for some tips.
+    - See "Remote Access" for some tips.
 
 3. Run `git clone https://github.com/adambauman/service-helpers.git`
 
@@ -29,11 +28,41 @@
         - Enter a very strong password for the super user
 
 ## Client Setup
+Unreal Editor includes solid Perforce integration, outside the editor you can use the Helix Visual Client to sync content and manage server 
+stuff like your users and groups.
 
-- Helix Visual Client, Windows EXE version: https://www.perforce.com/downloads/helix-visual-client-p4v
+### Install the visual client
+Helix Visual Client, Windows EXE version: https://www.perforce.com/downloads/helix-visual-client-p4v
 
+### TODO: p4v setup, user management, and workspace creation
 
-## Remote Admin Notes
+### Prepare for UE integration
+Open a command prompt and run:
+- `p4 set P4USER=<user_name>`
+- `p4 set P4PORT=ssl:<server_ip>:<port_number>`  example: "ssl:10.1.0.220:1666"
+- `p4 login`  enter your password
+
+### Connect in UE
+1. Open a UE project, click `Tools` and `Connect to Revision Control...`
+   
+![In UE Clicking Tools and Connect to Revision Control](./assets/images/unreal-version-control-menu-item.png)
+
+2. Enter your server info, example:
+   
+![In UE filling in the Revision Control Login dialog](./assets/images/unreal-version-control-dialog.png)
+
+## Partitioning
+By default the server installer only partitions out what it needs, it's your perogitive if you want to expand the root partition to use the whole 
+disk or create additional partitions. Starting out I'd opt to fill the whole disk, especially since we're deploying a micro service and you'll have this
+data stored in at least two other locations. 
+
+Use all the default partitioning options until you get to this screen, then select the root partition and hit the `edit` option:
+![Selecting the partition edit control](./assets/images/ubuntu-partition-02-edit-control.png)
+
+Expand Size to the max value and select `Save`.
+![Expanding partition size to the max value](./assets/images/ubuntu-partition-03-edit-values.png)
+
+## Remote Access
 If you plan to setup and maintain remotely from a Windows environment give Powershell a shot.
 
 Install Powershell 7+: https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.4#msi
