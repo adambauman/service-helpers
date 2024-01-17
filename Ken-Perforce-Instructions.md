@@ -1,3 +1,4 @@
+# Setup
 ## Server Setup
 
 - LTS version of Ubuntu Server.
@@ -31,26 +32,47 @@
 Unreal Editor includes solid Perforce integration, outside the editor you can use the Helix Visual Client to sync content and manage server 
 stuff like your users and groups.
 
-### Install the visual client
+### Install the Helix client
 Helix Visual Client, Windows EXE version: https://www.perforce.com/downloads/helix-visual-client-p4v
 
-### TODO: p4v setup, user management, and workspace creation
+### Setup your P4 environment
+The `p4` command is used to do everything from the client-side. This includes user and workspace managment, server configuration, and the publishing/syncing of your assets.
 
-### Prepare for UE integration
-Open a command prompt and run:
-- `p4 set P4USER=<user_name>`
+They maintain a solid usage guide: https://www.perforce.com/manuals/cmdref/Content/CmdRef/Home-cmdref.html
+
+To start initial setup open a command prompt on your client and run:
+- `p4 -u super configure set dm.user.noautocreate=2`
+    - This disables the auto creation of a user for anyone that connects and pushes content.
+
+- `p4 -u super -f <new_user_name>`
+    - A text editor will appear, the recommended fields are:
+        - User: <user_name_no_spaces>
+        - Email: <your_email_address>
+        - FullName: <your_full_name>
+    - Save the document and close the editor, this will finish user generation.
+
+- `p4 -u <new_user_name> passwd`
+    - Enter a strong password, this is the user you'll use to manage content from any client.
+
+- `p4 set P4USER=<new_user_name>`
 - `p4 set P4PORT=ssl:<server_ip>:<port_number>`  example: "ssl:10.1.0.220:1666"
 - `p4 login`  enter your password
+
+### Creating a workspace
+This is easier in the P4V GUI, run P4V and follow this guide: https://www.perforce.com/manuals/p4v/Content/P4V/using.workspaces.html
+
+I recommend creating a workspace in an empty folder and adding your content through P4V. Otherwise you might hit some weird permissions issues. You can remove the old copy of your assets once you're comfortable with submiting and syncing.
 
 ### Connect in UE
 1. Open a UE project, click `Tools` and `Connect to Revision Control...`
    
 ![In UE Clicking Tools and Connect to Revision Control](./assets/images/unreal-version-control-menu-item.png)
 
-2. Enter your server info, example:
+2. Enter your server info and workspace name, example:
    
 ![In UE filling in the Revision Control Login dialog](./assets/images/unreal-version-control-dialog.png)
 
+# Notes
 ## Partitioning
 By default the server installer only partitions out what it needs, it's your perogitive if you want to expand the root partition to use the whole 
 disk or create additional partitions. Starting out I'd opt to fill the whole disk, especially since we're deploying a micro service and you'll have this
